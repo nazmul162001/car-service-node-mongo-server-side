@@ -1,6 +1,7 @@
 const express = require('express');
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const cors = require('cors');
+const res = require('express/lib/response');
 require('dotenv').config();
 const port = process.env.PORT || 5000;
 
@@ -21,6 +22,7 @@ async function run() {
   try{
     await client.connect();
     const serviceCollection = client.db("geniusCar").collection("services")
+    const orderCollection = client.db('geniusCar').collection('order');
 
     app.get('/service/', async(req, res) => {
       const query = {};
@@ -51,6 +53,13 @@ async function run() {
       res.send(result);
     })
 
+
+    // creat order
+    app.post('/order', async(req, res) => {
+      const order = req.body;
+      const result = await orderCollection.insertOne(order);
+      res.send(result)
+    })
 
 
   }
