@@ -120,6 +120,10 @@ async function run() {
 
 run().catch(console.dir);
 
+app.get('/hero', (req, res) => {
+  res.send('Hero meets hero ku')
+})
+
 
 
 app.get('/', (req, res) => {
